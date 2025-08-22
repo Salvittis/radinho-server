@@ -1,7 +1,7 @@
 {
   "name": "radinho-server",
   "version": "1.0.0",
-  "description": "Servidor de walkie-talkie online para conversar com amigos",
+  "description": "Servidor de walkie-talkie online",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -13,16 +13,5 @@
   },
   "engines": {
     "node": "16.x"
-  },
-  "repository": {
-    "url": "https://glitch.com/edit/#!/radinho-server"
-  },
-  "license": "MIT",
-  "keywords": [
-    "node",
-    "glitch",
-    "express",
-    "socket.io",
-    "walkie-talkie"
-  ]
+  }
 }
