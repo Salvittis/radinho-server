@@ -67,14 +67,29 @@ io.on('connection', (socket) => {
         socket.to(channel).emit('userStoppedSpeaking', userId);
     });
     
-    socket.on('audioData', (data) => {
-        const { userId, audio, channel } = data;
-        socket.to(channel).emit('audioData', {
-            userId: userId,
-            audio: audio,
-            userName: currentUser?.name
-        });
+   socket.on('audioData', (data) => {
+    const { userId, audio, channel, mimeType } = data;
+    
+    // Log para debug
+    console.log(`Áudio recebido de ${currentUser?.name}, tamanho: ${audio?.length || 0} bytes`);
+    
+    // Validar dados antes de enviar
+    if (!audio || !channel) {
+        console.error('Dados de áudio inválidos');
+        return;
+    }
+    
+    // Enviar áudio para todos no canal, exceto o remetente
+    socket.to(channel).emit('audioData', {
+        userId: userId,
+        audio: audio,
+        userName: currentUser?.name,
+        mimeType: mimeType || 'audio/webm',
+        timestamp: Date.now() // Adiciona timestamp para debug
     });
+    
+    console.log(`Áudio transmitido para o canal ${channel}`);
+});
     
     socket.on('disconnect', () => {
         if (currentUser && currentChannel) {
